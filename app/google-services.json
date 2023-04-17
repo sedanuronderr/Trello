@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "40567036975",
+    "project_id": "projectmanagement-1153d",
+    "storage_bucket": "projectmanagement-1153d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:40567036975:android:91fd6bf21f8d56be3a3ada",
+        "android_client_info": {
+          "package_name": "com.seda.trello"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "40567036975-p7n5b534i384iposflvki2cpj7lep5af.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBv2nNffdo8EkkGaD8yHIFtxnzuJudrIp8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "40567036975-p7n5b534i384iposflvki2cpj7lep5af.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
