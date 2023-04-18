@@ -1,5 +1,6 @@
 package com.seda.trello.Login
 
+import android.app.Dialog
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -9,14 +10,18 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.seda.trello.ObjectClass
 import com.seda.trello.R
 
 import com.seda.trello.databinding.FragmentSignUpBinding
 
 class SignUpFragment : Fragment() {
+    private lateinit var auth: FirebaseAuth
 private lateinit var binding: FragmentSignUpBinding
-
+    private lateinit var mProgressDialog: Dialog
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -27,7 +32,8 @@ private lateinit var binding: FragmentSignUpBinding
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSignUpBinding.inflate(inflater, container, false)
-return binding.root
+        return binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -40,6 +46,7 @@ return binding.root
 
 
        }
+        auth = FirebaseAuth.getInstance()
         binding.btnSignUp.setOnClickListener {
             registerUser(it)
         }
@@ -49,22 +56,33 @@ return binding.root
 
     private fun registerUser(view: View){
 
-        val name:String =binding.etName.text.toString().trim(){
+        var name:String =binding.etName.text.toString().trim(){
             it <= ' '
         }
-        val email:String =binding.etEmail.text.toString().trim(){
+        var email:String =binding.etEmail.text.toString().trim(){
             it <= ' '
         }
-        val password:String =binding.etPassword.text.toString().trim(){
+        var password:String =binding.etPassword.text.toString().trim(){
             it <= ' '
         }
     if(validateForm(name,email,password,view)){
-         ObjectClass.showProgressDialog("Please wait",requireContext())
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email,password).addOnCompleteListener {
+           showProgress()
+        auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener {
             task->
-            ObjectClass.hideProgressDialog()
-            if (task.isSuccessful){
-                val firebasE
+          hideProgressDialog()
+          if (task.isSuccessful){
+                val firebaseUser: FirebaseUser = task.result.user!!
+                val registeredEmail = firebaseUser.email!!
+                Toast.makeText(requireContext(),"$name you have"+
+                        " successfully registered the email"+
+                        " address $registeredEmail",Toast.LENGTH_SHORT).show()
+                            binding.etEmail.setText("")
+                            binding.etName.setText("")
+                            binding.etPassword.setText("")
+                auth.signOut()
+
+            }else{
+                Toast.makeText(requireContext(),task.exception?.message,Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -91,5 +109,19 @@ return binding.root
             }
         }
 
+    }
+
+
+    fun showProgress(){
+
+        mProgressDialog= Dialog(requireActivity())
+        mProgressDialog.setContentView(R.layout.dialog_progress)
+        mProgressDialog.setCancelable(false)
+        mProgressDialog.setCanceledOnTouchOutside(false)
+        mProgressDialog.show()
+
+    }
+    fun hideProgressDialog(){
+        mProgressDialog.dismiss()
     }
 }

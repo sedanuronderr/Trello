@@ -15,30 +15,11 @@ import com.seda.trello.databinding.DialogProgressBinding
 
 class ObjectClass {
 companion object  BaseActivity{
-    private lateinit var binding: DialogProgressBinding
     private var doubleBackToExitPressedOnce = false
 
 
-    private lateinit var mProgressDialog: Dialog
 
 
-    fun showProgressDialog(text: String,view: Context) {
-        mProgressDialog = Dialog(view)
-
-        /*Set the screen content from a layout resource.
-        The resource will be inflated, adding all top-level views to the screen.*/
-        mProgressDialog.setContentView(R.layout.dialog_progress)
-
-        binding.tvProgressText.text = text
-
-        //Start the dialog and display it on screen.
-        mProgressDialog.show()
-    }
-
-
-    fun hideProgressDialog() {
-        mProgressDialog.dismiss()
-    }
 
     fun getCurrentUserID(): String {
         return FirebaseAuth.getInstance().currentUser!!.uid

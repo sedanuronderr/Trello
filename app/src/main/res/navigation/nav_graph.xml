@@ -34,5 +34,19 @@
         <action
             android:id="@+id/action_signInFragment_to_loginScreen"
             app:destination="@id/loginScreen" />
+        <action
+            android:id="@+id/action_signInFragment_to_trelloPageFragment"
+            app:destination="@id/trelloPageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/trelloPageFragment"
+        android:name="com.seda.trello.TrelloPageFragment"
+        android:label="fragment_trello_page"
+        tools:layout="@layout/fragment_trello_page" >
+        <action
+            android:id="@+id/action_trelloPageFragment_to_loginScreen"
+            app:destination="@id/loginScreen"
+            app:popUpTo="@id/loginScreen"
+            app:popUpToInclusive="false" />
     </fragment>
 </navigation>
