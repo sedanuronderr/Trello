@@ -17,6 +17,7 @@ import com.seda.trello.ObjectClass
 import com.seda.trello.R
 import com.seda.trello.databinding.FragmentSignInBinding
 import com.seda.trello.databinding.FragmentSignUpBinding
+import com.seda.trello.model.User
 
 
 class SignInFragment : Fragment() {
@@ -72,8 +73,7 @@ class SignInFragment : Fragment() {
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "createUserWithEmail:success")
-                         val action = SignInFragmentDirections.actionSignInFragmentToTrelloPageFragment()
-                        view.findNavController().navigate(action)
+
 
                     } else {
                         // If sign in fails, display a message to the user.
@@ -116,5 +116,11 @@ class SignInFragment : Fragment() {
     }
     fun hideProgressDialog(){
         mProgressDialog.dismiss()
+    }
+
+    fun signInSuccess(dataUser: User) {
+hideProgressDialog()
+        val action = SignInFragmentDirections.actionSignInFragmentToTrelloPageFragment()
+        view?.findNavController()?.navigate(action)
     }
 }

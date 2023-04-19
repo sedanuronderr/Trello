@@ -12,10 +12,12 @@
         tools:layout="@layout/fragment_login_screen" >
         <action
             android:id="@+id/action_loginScreen_to_signUpFragment"
-            app:destination="@id/signUpFragment" />
+            app:destination="@id/signUpFragment"
+            app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_loginScreen_to_signInFragment"
-            app:destination="@id/signInFragment" />
+            app:destination="@id/signInFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -36,7 +38,9 @@
             app:destination="@id/loginScreen" />
         <action
             android:id="@+id/action_signInFragment_to_trelloPageFragment"
-            app:destination="@id/trelloPageFragment" />
+            app:destination="@id/trelloPageFragment"
+            app:popUpTo="@id/signInFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/trelloPageFragment"
@@ -46,7 +50,7 @@
         <action
             android:id="@+id/action_trelloPageFragment_to_loginScreen"
             app:destination="@id/loginScreen"
-            app:popUpTo="@id/loginScreen"
+            app:popUpTo="@id/trelloPageFragment"
             app:popUpToInclusive="false" />
     </fragment>
 </navigation>

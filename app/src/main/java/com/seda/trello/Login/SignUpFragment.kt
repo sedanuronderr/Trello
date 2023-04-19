@@ -17,6 +17,7 @@ import com.seda.trello.ObjectClass
 import com.seda.trello.R
 
 import com.seda.trello.databinding.FragmentSignUpBinding
+import com.seda.trello.model.User
 
 class SignUpFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
@@ -53,6 +54,13 @@ private lateinit var binding: FragmentSignUpBinding
 
 
     }
+    fun userRegisteredSuccess(){
+        Toast.makeText(requireContext()," you have"+
+                " successfully registered the email"+
+                " address ",Toast.LENGTH_SHORT).show()
+        hideProgressDialog()
+        auth.signOut()
+    }
 
     private fun registerUser(view: View){
 
@@ -69,17 +77,14 @@ private lateinit var binding: FragmentSignUpBinding
            showProgress()
         auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener {
             task->
-          hideProgressDialog()
           if (task.isSuccessful){
                 val firebaseUser: FirebaseUser = task.result.user!!
                 val registeredEmail = firebaseUser.email!!
-                Toast.makeText(requireContext(),"$name you have"+
-                        " successfully registered the email"+
-                        " address $registeredEmail",Toast.LENGTH_SHORT).show()
+                val user= User(firebaseUser.uid,name,registeredEmail)
+              ObjectClass.registerUser(this,user)
                             binding.etEmail.setText("")
                             binding.etName.setText("")
                             binding.etPassword.setText("")
-                auth.signOut()
 
             }else{
                 Toast.makeText(requireContext(),task.exception?.message,Toast.LENGTH_SHORT).show()
