@@ -54,7 +54,13 @@ mFireStoreDb.collection(Constants.USERS)
 
 
     fun getCurrentUserID(): String {
-        return FirebaseAuth.getInstance().currentUser!!.uid
+
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if(currentUser!=null){
+            currentId= currentUser.uid
+            Log.e("söyle", currentId)
+        }
+        return currentId
     }
 
 

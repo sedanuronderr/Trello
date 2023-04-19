@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_signUpFragment_to_loginScreen"
             app:destination="@id/loginScreen" />
+        <action
+            android:id="@+id/action_signUpFragment_to_nav_trello_graph"
+            app:destination="@id/nav_trello_graph" />
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
@@ -37,20 +40,13 @@
             android:id="@+id/action_signInFragment_to_loginScreen"
             app:destination="@id/loginScreen" />
         <action
-            android:id="@+id/action_signInFragment_to_trelloPageFragment"
-            app:destination="@id/trelloPageFragment"
-            app:popUpTo="@id/signInFragment"
-            app:popUpToInclusive="true" />
+            android:id="@+id/action_signInFragment_to_nav_trello_graph"
+            app:destination="@id/nav_trello_graph" />
     </fragment>
-    <fragment
-        android:id="@+id/trelloPageFragment"
-        android:name="com.seda.trello.TrelloPageFragment"
-        android:label="fragment_trello_page"
-        tools:layout="@layout/fragment_trello_page" >
-        <action
-            android:id="@+id/action_trelloPageFragment_to_loginScreen"
-            app:destination="@id/loginScreen"
-            app:popUpTo="@id/trelloPageFragment"
-            app:popUpToInclusive="false" />
-    </fragment>
+    <activity
+        android:id="@+id/splashScreenActivity"
+        android:name="com.seda.trello.SplashScreenActivity"
+        android:label="activity_splash_screen"
+        tools:layout="@layout/activity_splash_screen" />
+    <include app:graph="@navigation/nav_trello_graph" />
 </navigation>

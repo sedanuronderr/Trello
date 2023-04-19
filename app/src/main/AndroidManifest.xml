@@ -8,25 +8,25 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:windowSoftInputMode="adjustPan|adjustResize"
         android:supportsRtl="true"
         android:theme="@style/Theme.Trello"
+        android:windowSoftInputMode="adjustPan|adjustResize"
         tools:targetApi="31">
         <activity
+            android:name=".Login.MainActivity2"
+            android:exported="false" />
+        <activity
             android:name=".SplashScreenActivity"
-            android:exported="true"
-            >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".Login.MainActivity"
-            android:exported="false">
-
-        </activity>
+            android:exported="false"></activity>
 
         <meta-data
             android:name="preloaded_fonts"

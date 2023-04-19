@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_trello_graph"
+    app:startDestination="@id/trelloPageFragment">
+
+    <fragment
+        android:id="@+id/trelloPageFragment"
+        android:name="com.seda.trello.TrelloPageFragment"
+        android:label="fragment_trello_page"
+        tools:layout="@layout/fragment_trello_page" />
+</navigation>

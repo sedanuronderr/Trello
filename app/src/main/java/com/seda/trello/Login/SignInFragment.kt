@@ -120,7 +120,7 @@ class SignInFragment : Fragment() {
 
     fun signInSuccess(dataUser: User) {
 hideProgressDialog()
-        val action = SignInFragmentDirections.actionSignInFragmentToTrelloPageFragment()
+        val action = SignInFragmentDirections.actionSignInFragmentToNavTrelloGraph()
         view?.findNavController()?.navigate(action)
     }
 }

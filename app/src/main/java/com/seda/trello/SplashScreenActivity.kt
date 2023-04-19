@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import com.seda.trello.Login.MainActivity
+import com.seda.trello.Login.MainActivity2
 import com.seda.trello.databinding.ActivitySplashScreenBinding
 
 class SplashScreenActivity : AppCompatActivity() {
@@ -16,8 +17,15 @@ class SplashScreenActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 Handler().postDelayed({
-    startActivity(Intent(this, MainActivity::class.java))
-    finish()
+    var currentUserID= ObjectClass.getCurrentUserID()
+    if(currentUserID.isNotEmpty()){
+        startActivity(Intent(this, MainActivity2::class.java))
+        finish()
+    }else{
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
+    }
+
 },2500)
         with(binding.animationView){
             setMinAndMaxFrame(20,50)
