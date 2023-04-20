@@ -13,10 +13,12 @@
         android:windowSoftInputMode="adjustPan|adjustResize"
         tools:targetApi="31">
         <activity
-            android:name=".Login.MainActivity2"
-            android:exported="false" />
+            android:name=".fragments.MainActivity2"
+            android:exported="false">
+
+        </activity>
         <activity
-            android:name=".SplashScreenActivity"
+            android:name=".fragments.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

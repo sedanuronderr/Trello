@@ -27,9 +27,6 @@
         <action
             android:id="@+id/action_signUpFragment_to_loginScreen"
             app:destination="@id/loginScreen" />
-        <action
-            android:id="@+id/action_signUpFragment_to_nav_trello_graph"
-            app:destination="@id/nav_trello_graph" />
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
@@ -45,8 +42,9 @@
     </fragment>
     <activity
         android:id="@+id/splashScreenActivity"
-        android:name="com.seda.trello.SplashScreenActivity"
+        android:name="com.seda.trello.fragments.SplashScreenActivity"
         android:label="activity_splash_screen"
         tools:layout="@layout/activity_splash_screen" />
+
     <include app:graph="@navigation/nav_trello_graph" />
 </navigation>

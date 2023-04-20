@@ -1,11 +1,11 @@
-package com.seda.trello
+package com.seda.trello.fragments
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import com.seda.trello.Login.MainActivity
-import com.seda.trello.Login.MainActivity2
+import com.seda.trello.ObjectClass
 import com.seda.trello.databinding.ActivitySplashScreenBinding
 
 class SplashScreenActivity : AppCompatActivity() {

@@ -2,6 +2,7 @@ package com.seda.trello.Login
 
 import android.app.Dialog
 import android.content.ContentValues.TAG
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -17,6 +18,7 @@ import com.seda.trello.ObjectClass
 import com.seda.trello.R
 import com.seda.trello.databinding.FragmentSignInBinding
 import com.seda.trello.databinding.FragmentSignUpBinding
+import com.seda.trello.fragments.MainActivity2
 import com.seda.trello.model.User
 
 
@@ -54,6 +56,7 @@ class SignInFragment : Fragment() {
         binding.btnSignIn.setOnClickListener {
             signInRegisteredUser(it)
         }
+
     }
     private fun popBackStackToA() {
         if (!findNavController().popBackStack()) {
@@ -73,7 +76,7 @@ class SignInFragment : Fragment() {
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "createUserWithEmail:success")
-
+                        ObjectClass.registerGet(this)
 
                     } else {
                         // If sign in fails, display a message to the user.
@@ -120,7 +123,7 @@ class SignInFragment : Fragment() {
 
     fun signInSuccess(dataUser: User) {
 hideProgressDialog()
-        val action = SignInFragmentDirections.actionSignInFragmentToNavTrelloGraph()
-        view?.findNavController()?.navigate(action)
+      val intent = Intent(requireContext(),MainActivity2::class.java)
+        startActivity(intent)
     }
 }

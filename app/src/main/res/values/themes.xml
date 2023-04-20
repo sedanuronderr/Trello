@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.Trello" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#2a5bb1</item>
-        <item name="colorPrimaryVariant">#d9e2ff</item>
+        <item name="colorPrimary">#2196F3</item>
+        <item name="colorPrimaryVariant">#03A9F4</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">#001a43</item>
@@ -13,4 +13,8 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="Theme.Trello.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Trello.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

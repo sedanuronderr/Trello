@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/trelloPageFragment"
-        android:name="com.seda.trello.TrelloPageFragment"
-        android:label="fragment_trello_page"
+        android:name="com.seda.trello.fragments.TrelloPageFragment"
+        android:label="Trello"
         tools:layout="@layout/fragment_trello_page" />
 </navigation>
