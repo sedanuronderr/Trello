@@ -16,7 +16,7 @@ class SplashScreenActivity : AppCompatActivity() {
          binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-Handler().postDelayed({
+        Handler().postDelayed({
     var currentUserID= ObjectClass.getCurrentUserID()
     if(currentUserID.isNotEmpty()){
         startActivity(Intent(this, MainActivity2::class.java))

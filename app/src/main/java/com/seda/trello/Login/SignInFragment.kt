@@ -1,5 +1,6 @@
 package com.seda.trello.Login
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.ContentValues.TAG
 import android.content.Intent
@@ -17,7 +18,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.seda.trello.ObjectClass
 import com.seda.trello.R
 import com.seda.trello.databinding.FragmentSignInBinding
-import com.seda.trello.databinding.FragmentSignUpBinding
 import com.seda.trello.fragments.MainActivity2
 import com.seda.trello.model.User
 
@@ -76,7 +76,7 @@ class SignInFragment : Fragment() {
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "createUserWithEmail:success")
-                        ObjectClass.registerGet(this)
+                        ObjectClass.registerGet(this,null)
 
                     } else {
                         // If sign in fails, display a message to the user.
@@ -121,8 +121,9 @@ class SignInFragment : Fragment() {
         mProgressDialog.dismiss()
     }
 
+    @SuppressLint("SuspiciousIndentation")
     fun signInSuccess(dataUser: User) {
-hideProgressDialog()
+      hideProgressDialog()
       val intent = Intent(requireContext(),MainActivity2::class.java)
         startActivity(intent)
     }

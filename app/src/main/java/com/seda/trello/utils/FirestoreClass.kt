@@ -5,15 +5,14 @@ import android.graphics.Color
 import android.util.Log
 
 import android.view.View
-import androidx.fragment.app.Fragment
 
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
-import com.google.firebase.firestore.ktx.toObject
 import com.seda.trello.Login.SignInFragment
 import com.seda.trello.Login.SignUpFragment
+import com.seda.trello.fragments.MainActivity2
 import com.seda.trello.model.User
 import com.seda.trello.utils.Constants
 
@@ -36,21 +35,26 @@ mFireStoreDb.collection(Constants.USERS)
 
 }
 
-    fun registerGet(fragment:SignInFragment){
+    fun registerGet(fragment:SignInFragment?, activity2: MainActivity2?){
+
         mFireStoreDb.collection(Constants.USERS)
             .document(getCurrentUserID())
             .get().addOnSuccessListener { documentSnapshot->
                 val dataUser = documentSnapshot.toObject(User::class.java)
-
+                activity2?.updateNavigationUserDetails(dataUser)
                 if (dataUser != null) {
-                    fragment.signInSuccess(dataUser)
+                    fragment?.signInSuccess(dataUser)
                 }
+
             }.addOnFailureListener {
+           fragment?.hideProgressDialog()
+
                 Log.e(
                     "Firestore Error", "Error", it
                 )
             }
     }
+
 
 
     fun getCurrentUserID(): String {

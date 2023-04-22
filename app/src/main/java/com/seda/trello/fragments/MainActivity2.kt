@@ -13,11 +13,15 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.seda.trello.Login.MainActivity
+import com.seda.trello.ObjectClass
 import com.seda.trello.R
 import com.seda.trello.databinding.ActivityMain2Binding
+import com.seda.trello.databinding.NavHeaderMainBinding
+import com.seda.trello.model.User
 
 class MainActivity2 : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -42,6 +46,8 @@ setSupportActionBar(binding.appBarMain.toolbar4)
         setupActionBarWithNavController(navController,appBarConfiguration)
         navView.setupWithNavController(navController)
         navView.setNavigationItemSelectedListener(this)
+
+        ObjectClass.registerGet(null,this)
     }
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
@@ -66,5 +72,18 @@ setSupportActionBar(binding.appBarMain.toolbar4)
                 }
         return true
 
+    }
+
+    fun updateNavigationUserDetails(dataUser: User?) {
+        val headerView = binding.navView.getHeaderView(0)
+        val headerBinding = NavHeaderMainBinding.bind(headerView)
+        Glide
+            .with(this)
+            .load(dataUser?.image)
+            .centerCrop()
+            .placeholder(R.drawable.loading)
+            .into(headerBinding.navImage)
+
+        headerBinding.textView4.text = dataUser?.name
     }
 }
