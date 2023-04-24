@@ -14,6 +14,7 @@ import com.seda.trello.Login.SignInFragment
 import com.seda.trello.Login.SignUpFragment
 import com.seda.trello.fragments.MainActivity2
 import com.seda.trello.model.User
+import com.seda.trello.profile.ProfileActivity
 import com.seda.trello.utils.Constants
 
 class ObjectClass {
@@ -35,13 +36,15 @@ mFireStoreDb.collection(Constants.USERS)
 
 }
 
-    fun registerGet(fragment:SignInFragment?, activity2: MainActivity2?){
+    fun registerGet(fragment:SignInFragment?, activity2: MainActivity2?,profile:ProfileActivity?){
 
         mFireStoreDb.collection(Constants.USERS)
             .document(getCurrentUserID())
             .get().addOnSuccessListener { documentSnapshot->
                 val dataUser = documentSnapshot.toObject(User::class.java)
+                profile?.setUserData(dataUser)
                 activity2?.updateNavigationUserDetails(dataUser)
+
                 if (dataUser != null) {
                     fragment?.signInSuccess(dataUser)
                 }

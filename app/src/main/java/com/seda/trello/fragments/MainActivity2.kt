@@ -22,6 +22,7 @@ import com.seda.trello.R
 import com.seda.trello.databinding.ActivityMain2Binding
 import com.seda.trello.databinding.NavHeaderMainBinding
 import com.seda.trello.model.User
+import com.seda.trello.profile.ProfileActivity
 
 class MainActivity2 : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -47,7 +48,7 @@ setSupportActionBar(binding.appBarMain.toolbar4)
         navView.setupWithNavController(navController)
         navView.setNavigationItemSelectedListener(this)
 
-        ObjectClass.registerGet(null,this)
+        ObjectClass.registerGet(null,this,null)
     }
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
@@ -58,6 +59,9 @@ setSupportActionBar(binding.appBarMain.toolbar4)
                 when(item.itemId){
                     R.id.nav_account->{
                         Toast.makeText(this,"My Profile",Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this,ProfileActivity::class.java)
+                        startActivity(intent)
+
                     }
 
                     R.id.nav_logout->{
