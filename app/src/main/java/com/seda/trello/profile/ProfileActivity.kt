@@ -1,18 +1,22 @@
 package com.seda.trello.profile
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
+import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 
 import com.bumptech.glide.Glide
-import com.seda.trello.Manifest
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.seda.trello.ObjectClass
 import com.seda.trello.R
 import com.seda.trello.databinding.ActivityProfileBinding
@@ -23,6 +27,8 @@ import com.seda.trello.utils.Constants
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
     private var mSelectedImageFileUri : Uri?=null
+    private lateinit var mProgressDialog: Dialog
+     private var mProfileImageUrl:String=""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +62,12 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
 
+        binding.updateBtn.setOnClickListener {
+            if(mSelectedImageFileUri != null){
+                uploadUserImage()
+            }
+        }
+
     }
 
     override fun onRequestPermissionsResult(
@@ -85,7 +97,18 @@ class ProfileActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == Activity.RESULT_OK && requestCode == Constants.PICK_IMAGE_REQUEST_CODE && data!!.data != null){
             mSelectedImageFileUri = data.data
+
+            Glide
+                .with(this)
+                .load(mSelectedImageFileUri)
+                .centerCrop()
+                .placeholder(R.drawable.loading)
+                .into(binding.navImage1)
+
+
         }
+
+
 
     }
 
@@ -104,6 +127,49 @@ class ProfileActivity : AppCompatActivity() {
             binding.mobile.setText(dataUser?.mobile.toString())
         }
 
+
+    }
+
+    private fun uploadUserImage(){
+        showProgress()
+
+        if(mSelectedImageFileUri !=null){
+            val sRef :StorageReference =
+                FirebaseStorage.getInstance().reference.child("USER_IMAGE"+ System.currentTimeMillis()
+                        + "." + getFileExtension(mSelectedImageFileUri))
+
+                sRef.putFile(mSelectedImageFileUri!!).addOnSuccessListener {
+                    taskSnapshot->
+                    Log.e("Firebase Image URL",taskSnapshot.metadata!!.reference!!.downloadUrl.toString())
+                    taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener {
+                        uri->
+                        Log.i("Downloadable Image URL",uri.toString())
+                        mProfileImageUrl = uri.toString()
+hideProgressDialog()
+
+
+                    }
+                }
+        }
+    }
+
+    //Uri türünü bulan = mimtypemap
+
+    private fun getFileExtension(uri:Uri?):String?{
+
+        return MimeTypeMap.getSingleton().getExtensionFromMimeType(contentResolver.getType(uri!!))
+    }
+    fun showProgress(){
+
+        mProgressDialog= Dialog(this)
+        mProgressDialog.setContentView(R.layout.dialog_progress)
+        mProgressDialog.setCancelable(false)
+        mProgressDialog.setCanceledOnTouchOutside(false)
+        mProgressDialog.show()
+
+    }
+    fun hideProgressDialog(){
+        mProgressDialog.dismiss()
     }
 
 }
