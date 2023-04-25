@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.util.Log
 
 import android.view.View
+import android.widget.Toast
 
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -70,6 +71,22 @@ mFireStoreDb.collection(Constants.USERS)
         return currentId
     }
 
+     fun updateUserProfileData(activity: ProfileActivity,
+                               userHashMap: HashMap<String,Any>){
+         mFireStoreDb.collection(Constants.USERS)
+             .document(getCurrentUserID())
+             .update(userHashMap)
+             .addOnSuccessListener {
+                 Log.e(
+                     activity.javaClass.simpleName, "Success"
+                 )
+                 Toast.makeText(activity," update successfuly",Toast.LENGTH_SHORT).show()
+                 activity.profileUpdateSuccess()
+             }.addOnFailureListener{
+                 activity.hideProgressDialog()
+             }
+
+     }
 
     fun showErrorSnackBar(message: String,view: View) {
         val snackBar =

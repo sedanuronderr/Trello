@@ -29,7 +29,7 @@ class ProfileActivity : AppCompatActivity() {
     private var mSelectedImageFileUri : Uri?=null
     private lateinit var mProgressDialog: Dialog
      private var mProfileImageUrl:String=""
-
+    private lateinit var mUserDetail:User
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
@@ -65,6 +65,9 @@ class ProfileActivity : AppCompatActivity() {
         binding.updateBtn.setOnClickListener {
             if(mSelectedImageFileUri != null){
                 uploadUserImage()
+            }else{
+               showProgress()
+                updateUserProfileData()
             }
         }
 
@@ -114,6 +117,8 @@ class ProfileActivity : AppCompatActivity() {
 
 
     fun setUserData(dataUser: User?) {
+        mUserDetail = dataUser!!
+
         Glide
             .with(this)
             .load(dataUser?.image)
@@ -123,20 +128,42 @@ class ProfileActivity : AppCompatActivity() {
 
         binding.name.setText(dataUser?.name)
         binding.email.setText(dataUser?.email)
-        if(dataUser?.mobile != 0L){
+        if(dataUser.mobile != 0L){
             binding.mobile.setText(dataUser?.mobile.toString())
         }
 
 
     }
 
+    fun updateUserProfileData(){
+        val userHashMap = HashMap<String,Any>()
+        if (mProfileImageUrl.isNotEmpty() && mProfileImageUrl != mUserDetail.image ) {
+
+            userHashMap[Constants.IMAGE] = mProfileImageUrl
+
+           }
+             binding.apply {
+                 if(name.text.toString() != mUserDetail.name){
+                     userHashMap[Constants.NAME] = name.text.toString()
+                 }
+
+                 if(mobile.text.toString() != mUserDetail.mobile.toString()){
+                     userHashMap[Constants.MOBILE] = mobile.text.toString().toLong()
+
+                 }
+
+             }
+
+
+
+        ObjectClass.updateUserProfileData(this,userHashMap)
+    }
+
     private fun uploadUserImage(){
         showProgress()
 
         if(mSelectedImageFileUri !=null){
-            val sRef :StorageReference =
-                FirebaseStorage.getInstance().reference.child("USER_IMAGE"+ System.currentTimeMillis()
-                        + "." + getFileExtension(mSelectedImageFileUri))
+            val sRef :StorageReference = FirebaseStorage.getInstance().reference.child("USER_IMAGE"+ System.currentTimeMillis() + "." + getFileExtension(mSelectedImageFileUri))
 
                 sRef.putFile(mSelectedImageFileUri!!).addOnSuccessListener {
                     taskSnapshot->
@@ -145,9 +172,9 @@ class ProfileActivity : AppCompatActivity() {
                         uri->
                         Log.i("Downloadable Image URL",uri.toString())
                         mProfileImageUrl = uri.toString()
-hideProgressDialog()
+                         hideProgressDialog()
 
-
+                           updateUserProfileData()
                     }
                 }
         }
@@ -172,4 +199,8 @@ hideProgressDialog()
         mProgressDialog.dismiss()
     }
 
+    fun profileUpdateSuccess(){
+        hideProgressDialog()
+
+    }
 }
