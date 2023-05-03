@@ -4,24 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".profile.ProfileActivity">
+    tools:context=".fragments.CreateBoardActivity">
 
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbarr"
+        android:id="@+id/toolbarrr"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/header"
-        app:titleTextColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
+        app:titleTextColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/Theme.Trello.PopupOverlay"
-        app:title="My Profile">
+        app:title="Create Board">
 
     </androidx.appcompat.widget.Toolbar>
-
-
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -32,7 +30,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarr">
+        app:layout_constraintTop_toBottomOf="@+id/toolbarrr">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,14 +41,14 @@
 
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/nav_image1"
+                android:id="@+id/iv_board_image"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginTop="35dp"
                 android:src="@drawable/person"
+
                 android:translationX="130dp"
                 android:translationY="-30dp"
-
                 app:civ_border_color="#000000"
                 app:civ_border_width="1dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -63,49 +62,23 @@
                 android:layout_marginBottom="25dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/name"
+                    android:id="@+id/board_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Name" />
+
+                    android:hint="Board Name" />
             </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="25dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/email"
-
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="E-mail" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="25dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/mobile"
-                    android:layout_width="match_parent"
-
-                    android:layout_height="wrap_content"
-                    android:hint="Mobile" />
-            </com.google.android.material.textfield.TextInputLayout>
-
 
             <Button
-                android:id="@+id/update_btn"
+                android:id="@+id/create_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_margin="20dp"
                 android:background="@drawable/shape_button"
                 android:gravity="center"
-                android:text="Update " />
+                android:text="Create "
+                android:textColor="#FFFFFF" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

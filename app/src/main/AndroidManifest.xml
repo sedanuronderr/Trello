@@ -2,15 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET">
-
-    </uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE">
-
-    </uses-permission>
-<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE">
-
-</uses-permission>
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
 
     <application
         android:allowBackup="true"
@@ -22,6 +16,9 @@
         android:theme="@style/Theme.Trello"
         android:windowSoftInputMode="adjustPan|adjustResize"
         tools:targetApi="31">
+        <activity
+            android:name=".fragments.CreateBoardActivity"
+            android:exported="false" />
         <activity
             android:name=".profile.ProfileActivity"
             android:exported="false" />

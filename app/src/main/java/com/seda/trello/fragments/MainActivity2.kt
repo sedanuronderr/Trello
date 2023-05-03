@@ -23,20 +23,23 @@ import com.seda.trello.databinding.ActivityMain2Binding
 import com.seda.trello.databinding.NavHeaderMainBinding
 import com.seda.trello.model.User
 import com.seda.trello.profile.ProfileActivity
+import com.seda.trello.utils.Constants
 
 class MainActivity2 : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMain2Binding
+    private  lateinit var mUserName:String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
 
 
-setSupportActionBar(binding.appBarMain.toolbar4)
+        setSupportActionBar(binding.appBarMain.toolbar4)
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment)
+
 
 
         appBarConfiguration = AppBarConfiguration(
@@ -49,6 +52,12 @@ setSupportActionBar(binding.appBarMain.toolbar4)
         navView.setNavigationItemSelectedListener(this)
 
         ObjectClass.registerGet(null,this,null)
+        binding.appBarMain.floatingActionButton.setOnClickListener {
+            val intent = Intent(this,CreateBoardActivity::class.java)
+                intent.putExtra(Constants.NAME,mUserName)
+
+            startActivity(intent)
+        }
     }
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
@@ -79,6 +88,8 @@ setSupportActionBar(binding.appBarMain.toolbar4)
     }
 
     fun updateNavigationUserDetails(dataUser: User?) {
+        mUserName = dataUser!!.name
+
         val headerView = binding.navView.getHeaderView(0)
         val headerBinding = NavHeaderMainBinding.bind(headerView)
         Glide

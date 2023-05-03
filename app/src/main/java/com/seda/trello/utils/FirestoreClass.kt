@@ -1,6 +1,7 @@
 package com.seda.trello
 
 
+import android.app.Activity
 import android.graphics.Color
 import android.util.Log
 
@@ -13,7 +14,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.seda.trello.Login.SignInFragment
 import com.seda.trello.Login.SignUpFragment
+import com.seda.trello.fragments.CreateBoardActivity
 import com.seda.trello.fragments.MainActivity2
+import com.seda.trello.model.Board
 import com.seda.trello.model.User
 import com.seda.trello.profile.ProfileActivity
 import com.seda.trello.utils.Constants
@@ -69,6 +72,20 @@ mFireStoreDb.collection(Constants.USERS)
             Log.e("söyle", currentId)
         }
         return currentId
+    }
+
+    fun createBoard(activity:CreateBoardActivity,board: Board){
+        mFireStoreDb.collection(Constants.BOARD)
+            .document()
+            .set(board,SetOptions.merge())
+            .addOnSuccessListener {
+                Log.e(
+                    activity.javaClass.simpleName, "Success"
+                )
+                Toast.makeText(activity,"board created successfully.",Toast.LENGTH_SHORT).show()
+                activity.hideProgressDialog()
+            }
+
     }
 
      fun updateUserProfileData(activity: ProfileActivity,

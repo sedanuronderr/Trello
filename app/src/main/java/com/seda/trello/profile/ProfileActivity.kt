@@ -52,7 +52,7 @@ class ProfileActivity : AppCompatActivity() {
         binding.navImage1.setOnClickListener{
             if(ContextCompat.checkSelfPermission(this,
                     android.Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED){
-                      showImageChooser()
+                   Constants.showImageChooser(this)
 
             }else{
                 ActivityCompat.requestPermissions(
@@ -81,7 +81,7 @@ class ProfileActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if(requestCode == Constants.READ_STORAGE_PERMISSION_CODE){
             if(grantResults.isNotEmpty()&& grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    showImageChooser()
+                Constants.showImageChooser(this)
             }
         }else{
             Toast.makeText(this,"Opps,you just denied the permission for storage.You can also allow it from settings",Toast.LENGTH_SHORT).show()
@@ -90,11 +90,7 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-    private fun showImageChooser(){
-        var galleryIntent = Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-         startActivityForResult(galleryIntent,Constants.PICK_IMAGE_REQUEST_CODE)
 
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -163,9 +159,9 @@ class ProfileActivity : AppCompatActivity() {
         showProgress()
 
         if(mSelectedImageFileUri !=null){
-            val sRef :StorageReference = FirebaseStorage.getInstance().reference.child("USER_IMAGE"+ System.currentTimeMillis() + "." + getFileExtension(mSelectedImageFileUri))
+            val sRef :StorageReference = FirebaseStorage.getInstance().reference.child("USER_IMAGE"+ System.currentTimeMillis() + "." +Constants.getFileExtension(this,mSelectedImageFileUri))
 
-                sRef.putFile(mSelectedImageFileUri!!).addOnSuccessListener {
+             sRef.putFile(mSelectedImageFileUri!!).addOnSuccessListener {
                     taskSnapshot->
                     Log.e("Firebase Image URL",taskSnapshot.metadata!!.reference!!.downloadUrl.toString())
                     taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener {
@@ -182,10 +178,7 @@ class ProfileActivity : AppCompatActivity() {
 
     //Uri türünü bulan = mimtypemap
 
-    private fun getFileExtension(uri:Uri?):String?{
 
-        return MimeTypeMap.getSingleton().getExtensionFromMimeType(contentResolver.getType(uri!!))
-    }
     fun showProgress(){
 
         mProgressDialog= Dialog(this)

@@ -24,6 +24,16 @@
 
     <include layout="@layout/content_main"></include>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
 
+        android:layout_margin="8dp"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:src="@drawable/add"
+        app:backgroundTint="@color/purple_200" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
