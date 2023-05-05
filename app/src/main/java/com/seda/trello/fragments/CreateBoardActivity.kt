@@ -111,9 +111,8 @@ private var mBoardImageUrl:String=""
         val assignedUsersArrayList:ArrayList<String> = ArrayList()
         assignedUsersArrayList.add(ObjectClass.getCurrentUserID())
 
-        val board = Board(binding.boardName.toString(),mBoardImageUrl,mUserName,assignedUsersArrayList)
-
-              ObjectClass.createBoard(this,board)
+        val board = Board(binding.boardName.text.toString(),mBoardImageUrl,mUserName,assignedUsersArrayList)
+        ObjectClass.createBoard(this,board)
     }
 
     private fun uploadBoardImage(){
