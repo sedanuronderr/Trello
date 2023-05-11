@@ -5,12 +5,10 @@ import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
-import android.webkit.MimeTypeMap
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
@@ -41,6 +39,7 @@ private var mBoardImageUrl:String=""
             toolbarrr.setNavigationIcon(R.drawable.back)
             toolbarrr.setNavigationOnClickListener {
                 val intent = Intent(this@CreateBoardActivity, MainActivity2::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
                 finish()
             }
@@ -111,7 +110,8 @@ private var mBoardImageUrl:String=""
         val assignedUsersArrayList:ArrayList<String> = ArrayList()
         assignedUsersArrayList.add(ObjectClass.getCurrentUserID())
 
-        val board = Board(binding.boardName.text.toString(),mBoardImageUrl,mUserName,assignedUsersArrayList)
+        val board = Board(binding.boardName.text.toString(),mBoardImageUrl,mUserName,"",assignedUsersArrayList)
+
         ObjectClass.createBoard(this,board)
     }
 
@@ -128,7 +128,7 @@ private var mBoardImageUrl:String=""
                 mBoardImageUrl = uri.toString()
                boardCreateSuccessfully()
 
-             createBoard()
+               createBoard()
             }
         }.addOnFailureListener{
             Toast.makeText(this,it.message,Toast.LENGTH_SHORT).show()
@@ -138,6 +138,10 @@ private var mBoardImageUrl:String=""
 
     fun  boardCreateSuccessfully(){
         hideProgressDialog()
+        val intent = Intent(this@CreateBoardActivity, MainActivity2::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+
+        startActivity(intent)
         finish()
     }
 

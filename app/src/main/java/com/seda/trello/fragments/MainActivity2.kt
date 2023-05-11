@@ -1,14 +1,13 @@
 package com.seda.trello.fragments
 
+import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -29,6 +28,7 @@ class MainActivity2 : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMain2Binding
     private  lateinit var mUserName:String
+    private lateinit var mProgressDialog: Dialog
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMain2Binding.inflate(layoutInflater)
@@ -51,13 +51,14 @@ class MainActivity2 : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         navView.setupWithNavController(navController)
         navView.setNavigationItemSelectedListener(this)
 
-        ObjectClass.registerGet(null,this,null)
+        ObjectClass.registerGet(null,this,null,true)
         binding.appBarMain.floatingActionButton.setOnClickListener {
             val intent = Intent(this,CreateBoardActivity::class.java)
-                intent.putExtra(Constants.NAME,mUserName)
+            intent.putExtra(Constants.NAME,mUserName)
 
             startActivity(intent)
         }
+
     }
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
@@ -87,7 +88,7 @@ class MainActivity2 : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
 
     }
 
-    fun updateNavigationUserDetails(dataUser: User?) {
+    fun updateNavigationUserDetails(dataUser: User?, readBoardList: Boolean?) {
         mUserName = dataUser!!.name
 
         val headerView = binding.navView.getHeaderView(0)
@@ -100,5 +101,19 @@ class MainActivity2 : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
             .into(headerBinding.navImage)
 
         headerBinding.textView4.text = dataUser?.name
+
+
+    }
+    fun showProgress(){
+
+        mProgressDialog= Dialog(this)
+        mProgressDialog.setContentView(R.layout.dialog_progress)
+        mProgressDialog.setCancelable(false)
+        mProgressDialog.setCanceledOnTouchOutside(false)
+        mProgressDialog.show()
+
+    }
+    fun hideProgressDialog(){
+        mProgressDialog.dismiss()
     }
 }

@@ -18,7 +18,7 @@ object Constants {
     const val IMAGE:String="image"
     const val NAME:String="name"
     const val MOBILE:String="mobile"
-
+    const val ASSIGNED_TO:String ="assignedTo"
 
     fun showImageChooser(activity: Activity){
         var galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)

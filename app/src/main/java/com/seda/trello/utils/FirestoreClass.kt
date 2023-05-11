@@ -1,7 +1,6 @@
 package com.seda.trello
 
 
-import android.app.Activity
 import android.graphics.Color
 import android.util.Log
 
@@ -16,6 +15,7 @@ import com.seda.trello.Login.SignInFragment
 import com.seda.trello.Login.SignUpFragment
 import com.seda.trello.fragments.CreateBoardActivity
 import com.seda.trello.fragments.MainActivity2
+import com.seda.trello.fragments.TrelloPageFragment
 import com.seda.trello.model.Board
 import com.seda.trello.model.User
 import com.seda.trello.profile.ProfileActivity
@@ -24,7 +24,7 @@ import com.seda.trello.utils.Constants
 class ObjectClass {
 companion object  BaseActivity{
   private val mFireStoreDb = FirebaseFirestore.getInstance()
- var currentId=""
+  var currentId=""
 
 fun registerUser(fragment:SignUpFragment,userInfo:User){
 mFireStoreDb.collection(Constants.USERS)
@@ -40,14 +40,14 @@ mFireStoreDb.collection(Constants.USERS)
 
 }
 
-    fun registerGet(fragment:SignInFragment?, activity2: MainActivity2?,profile:ProfileActivity?){
+    fun registerGet(fragment:SignInFragment?, activity2: MainActivity2?,profile:ProfileActivity?,readBoardList:Boolean?=false){
 
         mFireStoreDb.collection(Constants.USERS)
             .document(getCurrentUserID())
             .get().addOnSuccessListener { documentSnapshot->
                 val dataUser = documentSnapshot.toObject(User::class.java)
                 profile?.setUserData(dataUser)
-                activity2?.updateNavigationUserDetails(dataUser)
+                activity2?.updateNavigationUserDetails(dataUser,readBoardList)
 
                 if (dataUser != null) {
                     fragment?.signInSuccess(dataUser)
@@ -86,6 +86,25 @@ mFireStoreDb.collection(Constants.USERS)
                 activity.hideProgressDialog()
             }
 
+    }
+    fun getBoardList(fragment: TrelloPageFragment){
+             mFireStoreDb.collection(Constants.BOARD)
+                 .whereArrayContains(Constants.ASSIGNED_TO, getCurrentUserID())
+                 .get()
+                 .addOnSuccessListener {document->
+                     val boardList:ArrayList<Board> = ArrayList()
+                      for (i in document.documents){
+                          val board = i.toObject(Board::class.java)
+                          if (board != null) {
+                              board.documentedId = i.id
+                          }
+                          if (board != null) {
+                              boardList.add(board)
+                          }
+
+                      }
+                    fragment.setupRecyclerView(boardList)
+                 }
     }
 
      fun updateUserProfileData(activity: ProfileActivity,

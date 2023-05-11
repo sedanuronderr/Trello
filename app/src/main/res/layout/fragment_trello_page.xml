@@ -7,35 +7,32 @@
     tools:context=".fragments.TrelloPageFragment">
 
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_boards_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:elevation="5dp"
-        app:cardCornerRadius="10dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_boards_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
+    </androidx.recyclerview.widget.RecyclerView>
 
-        </androidx.recyclerview.widget.RecyclerView>
-        <TextView
-            android:id="@+id/tv_no_boards_available"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="16sp"
-            android:text="@string/no_boards_are_available">
+    <TextView
+        android:id="@+id/tv_no_boards_available"
+        android:layout_width="0dp"
+        android:layout_height="90dp"
+        android:gravity="center"
+        android:visibility="visible"
+        android:text="@string/no_boards_are_available"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        </TextView>
-
-    </androidx.cardview.widget.CardView>
+    </TextView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

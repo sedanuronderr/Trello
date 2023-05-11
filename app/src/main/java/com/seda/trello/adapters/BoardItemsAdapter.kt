@@ -1,29 +1,59 @@
 package com.seda.trello.adapters
 
 import android.content.Context
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.seda.trello.R
+import com.seda.trello.databinding.ItemBoardBinding
 import com.seda.trello.model.Board
 
-class BoardItemsAdapter(private val context: Context,
-                        private var list: ArrayList<Board>):
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-private class MyViewHolder(view: View):RecyclerView.ViewHolder(view){
+class BoardItemsAdapter(private val context: Context,val board: ArrayList<Board>):
+    RecyclerView.Adapter<BoardItemsAdapter.MyViewHolder>() {
+
+    var onLongClickListener:((Board) ->Unit)?=null
+ class MyViewHolder(val binding: ItemBoardBinding):RecyclerView.ViewHolder(binding.root){
 
 
 }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        TODO("Not yet implemented")
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+
+             return  MyViewHolder(ItemBoardBinding.inflate(LayoutInflater.from(parent.context),parent,false))
+    }
+
+
+
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+val model = board[position]
+
+        Glide
+            .with(context)
+            .load(model.image)
+            .centerCrop()
+            .placeholder(R.drawable.ic_launcher_background)
+            .into(holder.binding.bordImage)
+
+        holder.binding.apply {
+            boardName.text= model.name
+            createdBy.text="Created by:  ${model.createBy}"
+        }
+holder.itemView.setOnClickListener{
+    onLongClickListener.let {
+        if (it != null) {
+            it(board[position])
+        }
+    }
+}
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
-    }
-
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        TODO("Not yet implemented")
-    }
+        return board.size   }
 }
