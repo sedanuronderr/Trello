@@ -11,14 +11,13 @@
         android:label="Trello"
         tools:layout="@layout/fragment_trello_page" >
         <action
-            android:id="@+id/action_trelloPageFragment_to_createBoardActivity"
-            app:destination="@id/createBoardActivity"
-            app:popUpTo="@id/trelloPageFragment"
-            app:popUpToInclusive="true" />
+            android:id="@+id/action_trelloPageFragment_to_taskListFragment"
+            app:destination="@id/taskListFragment"
+            app:popUpToInclusive="false" />
     </fragment>
-    <activity
-        android:id="@+id/createBoardActivity"
-        android:name="com.seda.trello.fragments.CreateBoardActivity"
-        android:label="activity_create_board"
-        tools:layout="@layout/activity_create_board" />
+    <fragment
+        android:id="@+id/taskListFragment"
+        android:name="com.seda.trello.fragments.TaskListFragment"
+        android:label="fragment_task_list"
+        tools:layout="@layout/fragment_task_list" />
 </navigation>

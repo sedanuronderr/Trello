@@ -13,10 +13,10 @@ import com.seda.trello.R
 import com.seda.trello.databinding.ItemBoardBinding
 import com.seda.trello.model.Board
 
-class BoardItemsAdapter(private val context: Context,val board: ArrayList<Board>):
+class BoardItemsAdapter(private val context: Context,val board: ArrayList<Board>,private val clickListener:(Board)->Unit):
     RecyclerView.Adapter<BoardItemsAdapter.MyViewHolder>() {
 
-    var onLongClickListener:((Board) ->Unit)?=null
+
  class MyViewHolder(val binding: ItemBoardBinding):RecyclerView.ViewHolder(binding.root){
 
 
@@ -46,10 +46,10 @@ val model = board[position]
             createdBy.text="Created by:  ${model.createBy}"
         }
 holder.itemView.setOnClickListener{
-    onLongClickListener.let {
-        if (it != null) {
-            it(board[position])
-        }
+    clickListener?.let {it1->
+
+            it1(board[position])
+
     }
 }
     }

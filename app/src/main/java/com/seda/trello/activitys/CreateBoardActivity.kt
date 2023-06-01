@@ -1,4 +1,4 @@
-package com.seda.trello.fragments
+package com.seda.trello.activitys
 
 import android.app.Activity
 import android.app.Dialog
@@ -17,6 +17,7 @@ import com.google.firebase.storage.StorageReference
 import com.seda.trello.ObjectClass
 import com.seda.trello.R
 import com.seda.trello.databinding.ActivityCreateBoardBinding
+import com.seda.trello.fragments.MainActivity2
 import com.seda.trello.model.Board
 import com.seda.trello.utils.Constants
 

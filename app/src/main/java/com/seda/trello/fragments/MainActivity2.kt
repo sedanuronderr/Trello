@@ -18,16 +18,20 @@ import com.google.firebase.auth.FirebaseAuth
 import com.seda.trello.Login.MainActivity
 import com.seda.trello.ObjectClass
 import com.seda.trello.R
+import com.seda.trello.adapters.BoardItemsAdapter
 import com.seda.trello.databinding.ActivityMain2Binding
 import com.seda.trello.databinding.NavHeaderMainBinding
 import com.seda.trello.model.User
-import com.seda.trello.profile.ProfileActivity
+import com.seda.trello.activitys.CreateBoardActivity
+import com.seda.trello.activitys.ProfileActivity
 import com.seda.trello.utils.Constants
 
 class MainActivity2 : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMain2Binding
     private  lateinit var mUserName:String
+    private lateinit var boardItemsAdapter: BoardItemsAdapter
+
     private lateinit var mProgressDialog: Dialog
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,19 +56,17 @@ class MainActivity2 : AppCompatActivity(),NavigationView.OnNavigationItemSelecte
         navView.setNavigationItemSelectedListener(this)
 
         ObjectClass.registerGet(null,this,null,true)
-        binding.appBarMain.floatingActionButton.setOnClickListener {
-            val intent = Intent(this,CreateBoardActivity::class.java)
-            intent.putExtra(Constants.NAME,mUserName)
 
-            startActivity(intent)
-        }
+
 
     }
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+    private fun onPopularItemLongClickListener() {
 
+    }
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
                 when(item.itemId){
                     R.id.nav_account->{

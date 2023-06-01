@@ -6,6 +6,7 @@ import android.util.Log
 
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -13,12 +14,12 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.seda.trello.Login.SignInFragment
 import com.seda.trello.Login.SignUpFragment
-import com.seda.trello.fragments.CreateBoardActivity
+import com.seda.trello.activitys.CreateBoardActivity
 import com.seda.trello.fragments.MainActivity2
 import com.seda.trello.fragments.TrelloPageFragment
 import com.seda.trello.model.Board
 import com.seda.trello.model.User
-import com.seda.trello.profile.ProfileActivity
+import com.seda.trello.activitys.ProfileActivity
 import com.seda.trello.utils.Constants
 
 class ObjectClass {
@@ -39,7 +40,19 @@ mFireStoreDb.collection(Constants.USERS)
     }
 
 }
+fun dataUserGet():String{
+    var currentUsername =""
+    mFireStoreDb.collection(Constants.USERS)
+        .document(getCurrentUserID())
+        .get().addOnSuccessListener { documentSnapshot->
+           val  dataUser = documentSnapshot.toObject(User::class.java)
 
+            currentUsername= dataUser?.name.toString()
+
+
+        }
+    return  currentUsername
+}
     fun registerGet(fragment:SignInFragment?, activity2: MainActivity2?,profile:ProfileActivity?,readBoardList:Boolean?=false){
 
         mFireStoreDb.collection(Constants.USERS)
@@ -74,7 +87,7 @@ mFireStoreDb.collection(Constants.USERS)
         return currentId
     }
 
-    fun createBoard(activity:CreateBoardActivity,board: Board){
+    fun createBoard(activity: CreateBoardActivity, board: Board){
         mFireStoreDb.collection(Constants.BOARD)
             .document()
             .set(board,SetOptions.merge())

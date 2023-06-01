@@ -42,7 +42,7 @@
     </fragment>
     <activity
         android:id="@+id/splashScreenActivity"
-        android:name="com.seda.trello.fragments.SplashScreenActivity"
+        android:name="com.seda.trello.activitys.SplashScreenActivity"
         android:label="activity_splash_screen"
         tools:layout="@layout/activity_splash_screen" />
 
